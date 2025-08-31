@@ -1,5 +1,6 @@
 import { Bot } from "lucide-react"
 import { LoginForm } from "@/components/login-form";
+import {AnimatedBeamMultipleOutputDemo} from "@/components/login-image";
 
 export default function LoginPage() {
   return (
@@ -20,6 +21,7 @@ export default function LoginPage() {
         </div>
       </div>
       <div className="bg-muted relative hidden lg:flex lg:justify-center lg:items-center ">
+        <AnimatedBeamMultipleOutputDemo />
       </div>
     </div>
   )

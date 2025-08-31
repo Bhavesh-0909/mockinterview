@@ -1,45 +1,25 @@
 "use client";
 
 import { Moon, SunDim } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
 import { flushSync } from "react-dom";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/context/ThemeContext";
 
 type Props = {
   className?: string;
 };
 
 export const AnimatedThemeToggler = ({ className }: Props) => {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const { theme, toggleTheme } = useTheme();
   const buttonRef = useRef<HTMLButtonElement>(null);
-
-  // 👇 Hydrate theme state from DOM / localStorage
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-    const dark =
-      savedTheme === "dark" ||
-      (!savedTheme && prefersDark) ||
-      document.documentElement.classList.contains("dark");
-
-    if (dark) {
-      document.documentElement.classList.add("dark");
-      setIsDarkMode(true);
-    } else {
-      document.documentElement.classList.remove("dark");
-      setIsDarkMode(false);
-    }
-  }, []);
 
   const changeTheme = async () => {
     if (!buttonRef.current) return;
 
     const transition = document.startViewTransition(() => {
       flushSync(() => {
-        const dark = document.documentElement.classList.toggle("dark");
-        localStorage.setItem("theme", dark ? "dark" : "light");
-        setIsDarkMode(dark);
+        toggleTheme();
       });
     });
 
@@ -71,7 +51,7 @@ export const AnimatedThemeToggler = ({ className }: Props) => {
 
   return (
     <button ref={buttonRef} onClick={changeTheme} className={cn(className)}>
-      {isDarkMode ? <SunDim className="size-4" /> : <Moon className="size-4" />}
+      {theme === "dark" ? <SunDim className="size-4" /> : <Moon className="size-4" />}
     </button>
   );
 };

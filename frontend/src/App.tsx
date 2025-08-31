@@ -8,15 +8,14 @@ import SignupPage from "./pages/signup";
 
 function App() {
   return (
-    <div>
+    <div className="min-h-screen max-w-screen overflow-x-hidden bg-background">
       <Nav />
-
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   )

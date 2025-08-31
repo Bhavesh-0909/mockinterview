@@ -9,7 +9,7 @@ const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className={`h-16 w-full flex items-center justify-between px-4  bg-background ${location.pathname === "/login" || location.pathname === "/signup" ? "hidden" : "block"}`}>
+    <nav className={`h-16 w-full flex items-center justify-between px-4 bg-background ${location.pathname === "/login" || location.pathname === "/signup" ? "hidden" : "block"}`}>
 
       <div className="flex items-center space-x-2">
         <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">

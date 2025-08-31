@@ -1,10 +1,20 @@
-import Nav from "./components/components/Nav";
+import { Routes, Route } from "react-router-dom";
+import Nav from "./components/Nav";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import NotFound from "./pages/NotFound";
+
 function App() {
   return (
-    <main className="h-screen w-screen flex items-center justify-center bg-background">
+    <div>
       <Nav />
-      <h1 className='text-3xl font-bold text-primary'>csc</h1>
-    </main>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
   )
 }
 

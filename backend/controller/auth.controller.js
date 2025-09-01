@@ -64,7 +64,7 @@ export const login = async (req, res) => {
             userCredits: user.credits
         }, process.env.JWT_SECRET, { expiresIn: "3d" });
 
-        return res.status(200).json({ message: "Login successful", token });
+        return res.status(200).cookie("token", token, { httpOnly: true }).json({ message: "Login successful" });
     } catch (error) {
         console.error("Error during login:", error);
         return res.status(500).json({ message: "Internal server error" });

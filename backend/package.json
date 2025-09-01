@@ -16,6 +16,7 @@
     "@langchain/google-genai": "^0.2.16",
     "@langchain/langgraph": "^0.4.8",
     "body-parser": "^2.2.0",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "drizzle-orm": "^0.44.5",

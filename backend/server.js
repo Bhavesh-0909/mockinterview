@@ -1,11 +1,14 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { config } from "dotenv";
+import cookieParser from "cookie-parser";
 config();
 import cors from "cors";
 
 const server = express();
 server.use(bodyParser.json());
+server.use(cookieParser());
+
 server.use(cors({
     origin: '*',
 }));

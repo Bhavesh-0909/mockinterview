@@ -11,3 +11,21 @@ export const problems = pgTable("problems_dataset", {
   constraints: varchar("constraints", { length: 512 }),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 256 }).unique().notNull(),
+  fullname: varchar("fullname", { length: 256 }).notNull(),
+  college: varchar("college", { length: 256 }).notNull(),
+  contact: varchar("contact", { length: 15 }).unique(),
+  resumelink: varchar("resumelink", { length: 512 }),
+  credits: integer("credits").default(10),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const otp = pgTable("otp", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 256 }).notNull(),
+  code: varchar("code", { length: 6 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});

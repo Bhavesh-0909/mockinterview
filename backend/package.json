@@ -20,6 +20,9 @@
     "dotenv": "^17.2.1",
     "drizzle-orm": "^0.44.5",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^7.0.6",
+    "otp-generator": "^4.0.1",
     "pg": "^8.16.3"
   }
 }

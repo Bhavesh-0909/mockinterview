@@ -4,6 +4,7 @@ import { transporter, mailOptions } from "../services/mail.js";
 import { otp, users } from "../db/schema.js";
 import { db } from "../db/db.js";
 import { eq } from "drizzle-orm";
+import { subMinutes } from "date-fns";
 
 export const otpMailer = async (req, res) => {
     try {
@@ -48,8 +49,12 @@ export const otpMailer = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { email_, otp_ } = req.body;
-
-        const validOtp = await db.select().from(otp).where(eq(otp.email, email_)).where(eq(otp.code, otp_)).execute();
+        const fiveMinutesAgo = subMinutes(new Date(), 5);
+        const validOtp = await db.select().from(otp).where(and(
+            eq(otp.email, email_),
+            eq(otp.code, otp_),
+            gt(otp.createdAt, fiveMinutesAgo)
+        )).execute();
 
         if (!validOtp) {
             return res.status(401).json({ message: "Invalid OTP" });

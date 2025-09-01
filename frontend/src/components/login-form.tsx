@@ -54,6 +54,7 @@ export function LoginForm({
     } finally {
       toast("OTP sent", {
         description: "Please check your email for the OTP.",
+        descriptionClassName: "leading-7 [&:not(:first-child)]:mt-6"
       });
       complete();
       navigate(`/verify-otp/${values.email}`);

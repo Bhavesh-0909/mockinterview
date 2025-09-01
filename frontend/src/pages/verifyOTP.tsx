@@ -37,20 +37,22 @@ export default function InputOTPForm() {
   })
 
   const location = useLocation();
-  const email = location.state?.email;
+  const email = location.pathname.split("/").pop() || "";
+  console.log("email", email);
   const { start, complete } = useLoadingBar();
   const navigation = useNavigate();
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     start();
     try {
-        const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/v1/auth/login`, {
+        const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/auth/login`, {
             method: "POST",
             headers: {
             "Content-Type": "application/json",
             },
             body: JSON.stringify({ email_: email, otp_: data.pin }),
         });
+        console.log("response", response);
         if (!response.ok) {
             toast.error("Failed to verify OTP")
             return
@@ -63,8 +65,9 @@ export default function InputOTPForm() {
     } catch (e) {
         toast.error(`Failed to submit form ${e}`);
         return;
+    } finally {
+      complete();
     }
-    complete();
     navigation("/");
   }
 

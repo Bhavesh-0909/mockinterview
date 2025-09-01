@@ -16,7 +16,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/verify-otp" element={<VerifyOTP />} />
+        <Route path="/verify-otp/:email" element={<VerifyOTP />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

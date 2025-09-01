@@ -10,11 +10,14 @@ export const otpMailer = async (req, res) => {
     try {
         const { email_ } = req.body;
 
-        const validEmail = db.select().from(users).where(eq(users.email, email_)).execute();
+        const validEmail = await db.select().from(users).where(eq(users.email, email_)).execute();
         if (!validEmail) {
             return res.status(404).json({ message: "Email not found" });
         }
-
+        const otpExists = await db.select().from(otp).where(and(eq(otp.email, email_), gt(otp.createdAt, subMinutes(new Date(), 5)))).execute();
+        if (otpExists) {
+            return res.status(409).json({ message: "OTP already sent" });
+        }
         const otpG = otpModule.generate(6, {
             upperCase: false,
             specialChars: false,

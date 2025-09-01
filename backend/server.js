@@ -12,9 +12,11 @@ server.use(cors({
 
 //routes
 import agentRoutes from "./routes/agent.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 //routing
 server.use("/api/v1/agent", agentRoutes);
+server.use("/api/v1/auth", authRoutes);
 
 server.get("/", (req, res) => {
   res.send("LangGraph interviewer agent is running 🚀");

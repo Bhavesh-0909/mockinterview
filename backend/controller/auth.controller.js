@@ -1,8 +1,9 @@
 import otpModule from "otp-generator";
 import jwt from "jsonwebtoken";
-import { transporter, mailOptions } from "../services/mail";
-import { otp, users } from "../db/schema";
-import { db } from "../db/db";
+import { transporter, mailOptions } from "../services/mail.js";
+import { otp, users } from "../db/schema.js";
+import { db } from "../db/db.js";
+import { eq } from "drizzle-orm";
 
 export const otpMailer = async (req, res) => {
     try {
@@ -80,7 +81,8 @@ export const signup = async (req, res) => {
         }
 
         const existingUser = await db.select().from(users).where(eq(users.email, email_)).execute();
-        if (existingUser) {
+
+        if (existingUser.length > 0) {
             return res.status(409).json({ message: "User already exists" });
         }
 
@@ -90,6 +92,7 @@ export const signup = async (req, res) => {
             contact: contact_,
             resumelink: resumelink_,
             college: college_,
+            credits: 10
         });
 
         return res.status(201).json({ message: "User registered successfully" });

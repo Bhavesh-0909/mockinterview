@@ -15,7 +15,8 @@ export const otpMailer = async (req, res) => {
             return res.status(404).json({ message: "Email not found" });
         }
         const otpExists = await db.select().from(otp).where(and(eq(otp.email, email_), gt(otp.createdAt, subMinutes(new Date(), 5)))).execute();
-        if (otpExists) {
+        console.log("otpExists", otpExists);
+        if (otpExists.length > 0) {
             return res.status(409).json({ message: "OTP already sent" });
         }
         const otpG = otpModule.generate(6, {

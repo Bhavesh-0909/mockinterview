@@ -11,6 +11,7 @@ server.use(cookieParser());
 
 server.use(cors({
     origin: '*',
+    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
 }));
 
 //routes

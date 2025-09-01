@@ -38,7 +38,6 @@ export default function InputOTPForm() {
 
   const location = useLocation();
   const email = location.pathname.split("/").pop() || "";
-  console.log("email", email);
   const { start, complete } = useLoadingBar();
   const navigation = useNavigate();
 
@@ -52,7 +51,6 @@ export default function InputOTPForm() {
             },
             body: JSON.stringify({ email_: email, otp_: data.pin }),
         });
-        console.log("response", response);
         if (!response.ok) {
             toast.error("Failed to verify OTP")
             return

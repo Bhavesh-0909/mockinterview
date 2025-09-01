@@ -5,6 +5,7 @@ import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import LoginPage from "./pages/login";
 import SignupPage from "./pages/signup";
+import VerifyOTP from "./pages/verifyOTP";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/verify-otp" element={<VerifyOTP />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

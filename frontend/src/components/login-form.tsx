@@ -12,6 +12,9 @@ import {
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import { useLoadingBar } from "react-top-loading-bar";
+import { redirect } from "react-router-dom";
+import { toast } from "sonner";
 
 const loginSchema = z.object({
   email: z.string().email()
@@ -21,6 +24,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const {start , complete} = useLoadingBar();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -28,8 +32,30 @@ export function LoginForm({
     },
   })
   
-  function onSubmit(values: z.infer<typeof loginSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
+    start();
+    try {
+      const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/auth/otp`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email_: values.email }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+      
+    } catch (error) {
+      console.error("Error during login:", error);
+    } finally {
+      toast("OTP sent", {
+        description: "Please check your email for the OTP.",
+      });
+      complete();
+      redirect("/");
+    }
   }
   
   return (

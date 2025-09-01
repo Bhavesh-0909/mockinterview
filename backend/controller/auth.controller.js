@@ -18,6 +18,9 @@ export const otpMailer = async (req, res) => {
             upperCase: false,
             specialChars: false,
             lowerCaseAlphabets: false,
+            upperCaseAlphabets: false,
+            digits: true,
+            lowerCase: false,
         });
 
         await db.insert(otp).values({

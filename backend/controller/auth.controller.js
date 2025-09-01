@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { transporter, mailOptions } from "../services/mail.js";
 import { otp, users } from "../db/schema.js";
 import { db } from "../db/db.js";
-import { eq } from "drizzle-orm";
+import { eq, and, gt } from "drizzle-orm";
 import { subMinutes } from "date-fns";
 
 export const otpMailer = async (req, res) => {
@@ -72,7 +72,7 @@ export const login = async (req, res) => {
             userCredits: user.credits
         }, process.env.JWT_SECRET, { expiresIn: "3d" });
 
-        return res.status(200).cookie("token", token, { httpOnly: true }).json({ message: "Login successful" });
+        return res.status(200).cookie("token", token, { httpOnly: true }).json({ message: "Login successful", token });
     } catch (error) {
         console.error("Error during login:", error);
         return res.status(500).json({ message: "Internal server error" });

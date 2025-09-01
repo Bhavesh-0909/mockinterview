@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useLoadingBar } from "react-top-loading-bar";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const loginSchema = z.object({
@@ -25,12 +25,14 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"form">) {
   const {start , complete} = useLoadingBar();
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
     },
   })
+
   
   async function onSubmit(values: z.infer<typeof loginSchema>) {
     start();
@@ -54,7 +56,7 @@ export function LoginForm({
         description: "Please check your email for the OTP.",
       });
       complete();
-      redirect("/");
+      navigate(`/verify-otp/${values.email}`);
     }
   }
   

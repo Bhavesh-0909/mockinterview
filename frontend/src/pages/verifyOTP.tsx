@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
-
+import { useLoadingBar } from "react-top-loading-bar"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -20,6 +20,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
+import { useNavigate, useLocation } from "react-router-dom"
 
 const FormSchema = z.object({
   pin: z.string().min(6, {
@@ -35,14 +36,36 @@ export default function InputOTPForm() {
     },
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast("You submitted the following values", {
-      description: (
-        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  const location = useLocation();
+  const email = location.state?.email;
+  const { start, complete } = useLoadingBar();
+  const navigation = useNavigate();
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    start();
+    try {
+        const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/v1/auth/login`, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email_: email, otp_: data.pin }),
+        });
+        if (!response.ok) {
+            toast.error("Failed to verify OTP")
+            return
+        }
+        const result = await response.json();
+        if (result.token) {
+            localStorage.setItem("token", result.token);
+            toast.success("OTP verified successfully");
+        }
+    } catch (e) {
+        toast.error(`Failed to submit form ${e}`);
+        return;
+    }
+    complete();
+    navigation("/");
   }
 
   return (
@@ -52,8 +75,8 @@ export default function InputOTPForm() {
           control={form.control}
           name="pin"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>One-Time Password</FormLabel>
+            <FormItem className="w-full flex flex-col items-center gap-2">
+              <FormLabel className="scroll-m-20 text-center text-lg font-bold tracking-tight text-balance">One Time Password</FormLabel>
               <FormControl>
                 <InputOTP maxLength={6} {...field}>
                   <InputOTPGroup>
@@ -74,7 +97,7 @@ export default function InputOTPForm() {
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button variant="default" type="submit">Submit</Button>
       </form>
     </Form>
   )

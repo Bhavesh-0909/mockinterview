@@ -1,5 +1,5 @@
-import { db } from "./db/db.js";
-import { problems } from "./db/schema.js";
+import { db } from "../db/db.js";
+import { problems } from "../db/schema.js";
 import { tool } from "@langchain/core/tools";
 import { z } from "zod";
 

@@ -30,7 +30,7 @@ function MarqueeAnimation() {
     const { theme } = useTheme();
   return (
     <div className="h-fit w-full flex flex-col items-center justify-center gap-4 px-4">
-        <h4 className="scroll-m-20 text-md font-semibold tracking-tight">Prepare for these Companies</h4>
+        <h4 className="scroll-m-20 text-md tracking-tight">Prepare for these Companies</h4>
         <Marquee className="w-full py-4">
             {theme === "dark" && companyDark.map((logo, index) => (
                 <MarqueeCard key={index} logo={logo} />

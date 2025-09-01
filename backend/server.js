@@ -3,9 +3,6 @@ import bodyParser from "body-parser";
 import { config } from "dotenv";
 config();
 import cors from "cors";
-import { app } from "./app.js";
-import { SystemMessage, HumanMessage } from "@langchain/core/messages";
-import { SYSTEM_PROMPT } from "./constant.js";
 
 const server = express();
 server.use(bodyParser.json());
@@ -13,21 +10,11 @@ server.use(cors({
     origin: '*',
 }));
 
-server.post("/chat", async (req, res) => {
-  const { input } = req.body; 
-  const messages = [];
-  messages.push(new SystemMessage(SYSTEM_PROMPT));
-  messages.push(new HumanMessage(input));
-  try {
-    const result = await app.invoke({ messages });
-    const lastMessage = result.messages[result.messages.length - 1];
+//routes
+import agentRoutes from "./routes/agent.routes.js";
 
-    res.json({ reply: lastMessage.content });
-  } catch (err) {
-    console.error("❌ Error:", err);
-    res.status(500).json({ error: err.message });
-  }
-});
+//routing
+server.use("/api/v1/agent", agentRoutes);
 
 server.get("/", (req, res) => {
   res.send("LangGraph interviewer agent is running 🚀");

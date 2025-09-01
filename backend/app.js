@@ -2,7 +2,7 @@ import { config } from "dotenv";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { StateGraph, MessagesAnnotation, END } from "@langchain/langgraph";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
-import { getDSAProblem } from "./tools.js";
+import { getDSAProblem } from "./tools/agent.tools.js";
 
 config();
 

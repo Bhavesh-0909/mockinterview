@@ -2,11 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { AnimatedThemeToggler } from "@/components/magicui/animated-theme-toggler";
-import { Bot, Menu, X } from "lucide-react";
+import { Bot, Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/context/ThemeContext";
 
 const Nav = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {theme, toggleTheme} = useTheme();
 
   return (
     <nav className={`h-16 w-full flex items-center justify-between px-4 bg-background ${location.pathname === "/login" || location.pathname === "/signup" || location.pathname.includes("verify-otp") ? "hidden" : "block"}`}>
@@ -31,7 +33,7 @@ const Nav = () => {
       </div>
 
       <div className="hidden md:flex items-center space-x-2">
-        <AnimatedThemeToggler className="cursor-pointer" />
+        <Button variant="ghost" className="hover:bg-muted hover:text-black dark:dark:hover:bg-muted hidden md:inline-flex" onClick={toggleTheme}>{theme === "dark" ? <Sun /> : <Moon />}</Button>
         <Button variant="ghost"><Link to="/login">Login</Link></Button>
         <Button variant="ghost"><Link to="/signup">Sign Up</Link></Button>
       </div>

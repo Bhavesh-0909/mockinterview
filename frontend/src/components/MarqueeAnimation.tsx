@@ -1,6 +1,6 @@
 import { Marquee } from "@/components/magicui/marquee";
 import { useTheme } from "@/context/ThemeContext";;
-
+import { motion } from "framer-motion";
 const companyDark = [
     "https://cdn.brandfetch.io/apple.com/w/419/h/512/theme/light/logo?c=1idZAyvjgoWG3sM6FM9",
     "https://cdn.brandfetch.io/google.com/w/512/h/161/logo?c=1idZAyvjgoWG3sM6FM9",
@@ -29,17 +29,25 @@ function MarqueeCard({ logo }: { logo: string }) {
 function MarqueeAnimation() {
     const { theme } = useTheme();
   return (
-    <div className="h-fit w-full flex flex-col items-center justify-center gap-4 px-4">
+    <motion.div
+      initial={{ opacity: 0, translateY: 40 }}
+      whileInView={{ opacity: 1, translateY: 0 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+      viewport={{ once: true }}
+    >
+      <div className="h-fit w-full flex flex-col items-center justify-center gap-4 px-4">
         <h4 className="scroll-m-20 text-md tracking-tight">Prepare for these Companies</h4>
         <Marquee className="w-full py-4">
-            {theme === "dark" && companyDark.map((logo, index) => (
-                <MarqueeCard key={index} logo={logo} />
-            ))}
-            {theme === "light" && companyLight.map((logo, index) => (
-                <MarqueeCard key={index} logo={logo} />
-            ))}
+          {theme === "dark" && companyDark.map((logo, index) => (
+            <MarqueeCard key={index} logo={logo} />
+          ))}
+          {theme === "light" && companyLight.map((logo, index) => (
+            <MarqueeCard key={index} logo={logo} />
+          ))}
         </Marquee>
-    </div>
+      </div>
+    </motion.div>
+
   )
 }
 

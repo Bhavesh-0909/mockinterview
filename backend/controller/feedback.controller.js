@@ -3,7 +3,7 @@ import { feedback } from "../db/schema.js";
 
 export const getFeedback = async (req, res) => {
     try {
-        const feedbackList = await db.select().from(feedback).orderBy('createdAt desc').limit(5).execute();
+        const feedbackList = await db.select().from(feedback).orderBy('createdAt desc').limit(3).execute();
         return res.status(200).json(feedbackList);
     } catch (error) {
         console.error("Error fetching feedback:", error);

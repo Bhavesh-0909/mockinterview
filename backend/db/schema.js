@@ -14,6 +14,7 @@ export const problems = pgTable("problems_dataset", {
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
+  avatarlink: varchar("avatarlink", { length: 512 }).notNull(),
   email: varchar("email", { length: 256 }).unique().notNull(),
   fullname: varchar("fullname", { length: 256 }).notNull(),
   college: varchar("college", { length: 256 }).notNull(),
@@ -25,7 +26,16 @@ export const users = pgTable("users", {
 
 export const otp = pgTable("otp", {
   id: serial("id").primaryKey(),
-  email: varchar("email", { length: 256 }).notNull(),
+  email: varchar("email", { length: 256 }).references(() => users.email).notNull().unique(),
   code: varchar("code", { length: 6 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const feedback = pgTable("feedback", {
+  id: serial("id").primaryKey(),
+  userid: integer("userid").references(() => users.id).notNull(),
+  avatarlink: varchar("avatarlink", { length: 512 }).notNull(),
+  fullname: varchar("fullname", { length: 256 }).notNull(),
+  comment: varchar("comment", { length: 512 }).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });

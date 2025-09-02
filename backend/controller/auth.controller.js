@@ -73,7 +73,8 @@ export const login = async (req, res) => {
             email: user.email,
             userId: user.id,
             userName: user.fullname,
-            userCredits: user.credits
+            userCredits: user.credits,
+            userAvatar: user.avatarlink,
         }, process.env.JWT_SECRET, { expiresIn: "3d" });
 
         return res.status(200).cookie("token", token, { httpOnly: true }).json({ message: "Login successful", token });
@@ -104,7 +105,8 @@ export const signup = async (req, res) => {
             contact: contact_,
             resumelink: resumelink_,
             college: college_,
-            credits: 10
+            credits: 10,
+            avatarlink: `https://api.dicebear.com/9.x/pixel-art/svg?seed=${fullname_}`
         });
 
         return res.status(201).json({ message: "User registered successfully" });

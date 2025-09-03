@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import Nav from "@/components/Nav.tsx";
-import Home from "@/pages/Home.tsx";
-import About from "@/pages/About.tsx";
-import NotFound from "@/pages/NotFound.tsx";
-import LoginPage from "@/pages/Login.tsx";
-import SignupPage from "@/pages/Signup.tsx";
-import VerifyOTP from "@/pages/VerifyOTP.tsx";
+import Nav from "@/components/Nav";
+import Home from "@/pages/Home";
+import About from "@/pages/About";
+import NotFound from "@/pages/NotFound";
+import LoginPage from "@/pages/Login";
+import SignupPage from "@/pages/Signup";
+import VerifyOTP from "@/pages/VerifyOTP";
 
 function App() {
   return (

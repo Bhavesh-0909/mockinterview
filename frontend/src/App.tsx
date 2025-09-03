@@ -3,9 +3,9 @@ import Nav from "@/components/Nav";
 import Home from "@/pages/Home";
 import About from "@/pages/About";
 import NotFound from "@/pages/NotFound";
-import LoginPage from "@/pages/Login";
-import SignupPage from "@/pages/Signup";
-import VerifyOTP from "@/pages/VerifyOTP";
+import LoginPage from "@/pages/login";
+import SignupPage from "@/pages/signup";
+import VerifyOTP from "@/pages/verifyotp";
 
 function App() {
   return (

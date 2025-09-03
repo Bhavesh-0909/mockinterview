@@ -19,9 +19,9 @@ import { toast } from "sonner"
 import { ExampleCombobox } from "./ui/college-combobox"
 
 const SignupSchema = z.object({
-  fullname: z.string().min(2, "Name too short").max(100),
-  email: z.string().email("Invalid email"),
-  college: z.string().min(2, "Select your college"),
+  fullname_: z.string().min(2, "Name too short").max(100),
+  email_: z.string().email("Invalid email"),
+  college_: z.string().min(2, "Select your college"),
 })
 
 export function SignupForm({
@@ -34,9 +34,9 @@ export function SignupForm({
   const form = useForm<z.infer<typeof SignupSchema>>({
     resolver: zodResolver(SignupSchema),
     defaultValues: {
-      email: "",
-      fullname: "",
-      college: "",
+      email_: "",
+      fullname_: "",
+      college_: "",
     },
   })
 
@@ -49,9 +49,9 @@ export function SignupForm({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email_: values.email,
-            fullname: values.fullname,
-            college: values.college,
+            email_: values.email_,
+            fullname_: values.fullname_,
+            college_: values.college_,
           }),
         }
       )
@@ -63,13 +63,13 @@ export function SignupForm({
       toast("Signup registration successful", {
         description: "Please login now",
       })
-
-      navigate(`/login`)
     } catch (error) {
       console.error("Error during signup:", error)
-      toast.error("Signup failed, please try again")
+      toast.error("Signup failed, please try again");
+      return;
     } finally {
-      complete()
+      complete();
+      navigate("/login");
     }
   }
 
@@ -90,7 +90,7 @@ export function SignupForm({
         <div className="grid gap-6">
           <FormField
             control={form.control}
-            name="fullname"
+            name="fullname_"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Full Name</FormLabel>
@@ -104,7 +104,7 @@ export function SignupForm({
 
           <FormField
             control={form.control}
-            name="email"
+            name="email_"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
@@ -118,7 +118,7 @@ export function SignupForm({
 
           <FormField
             control={form.control}
-            name="college"
+            name="college_"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>College</FormLabel>

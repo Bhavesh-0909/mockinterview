@@ -1,4 +1,4 @@
-import { pgTable, serial, varchar, timestamp, jsonb, integer} from "drizzle-orm/pg-core";
+import { pgTable, serial, varchar, timestamp, jsonb, integer, text} from "drizzle-orm/pg-core";
 
 export const problems = pgTable("problems_dataset", {
   id: serial("id").primaryKey(),
@@ -14,7 +14,7 @@ export const problems = pgTable("problems_dataset", {
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
-  avatarlink: varchar("avatarlink", { length: 512 }).notNull(),
+  avatarlink: text("avatarlink").notNull(),
   email: varchar("email", { length: 256 }).unique().notNull(),
   fullname: varchar("fullname", { length: 256 }).notNull(),
   college: varchar("college", { length: 256 }).notNull(),

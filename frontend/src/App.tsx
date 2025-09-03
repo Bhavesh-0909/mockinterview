@@ -5,7 +5,7 @@ import About from "@/pages/About";
 import NotFound from "@/pages/NotFound";
 import LoginPage from "@/pages/login";
 import SignupPage from "@/pages/signup";
-import VerifyOTP from "@/pages/verifyotp";
+import VerifyOTP from "@/pages/verifyOTP";
 
 function App() {
   return (

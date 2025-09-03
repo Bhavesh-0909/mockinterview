@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
-import { AnimatedThemeToggler } from "@/components/magicui/animated-theme-toggler";
 import { Bot, Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 
@@ -55,7 +54,7 @@ const Nav = () => {
           <Button variant="link" className="text-md font-semibold" asChild>
             <Link to="/contact">Contact</Link>
           </Button>
-          <AnimatedThemeToggler className="cursor-pointer" />
+          <Button variant="ghost" className="hover:bg-muted hover:text-black dark:dark:hover:bg-muted" onClick={toggleTheme}>{theme === "dark" ? <Sun /> : <Moon />}</Button>
           <Button variant="ghost"><Link to="/login">Login</Link></Button>
           <Button variant="ghost"><Link to="/signup">Sign Up</Link></Button>
         </div>

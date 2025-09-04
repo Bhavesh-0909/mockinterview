@@ -135,13 +135,18 @@ export const validateToken = async (req, res) => {
         if (!token) {
             return res.status(401).json({ message: "No token provided" });
         }
-        await jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-            if (err) {
-                return null;
-            }
-            return res.status(200).json({ message: "Token is valid", user: decoded });
-        });
-        
+        const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+        if (!decoded) {
+            return res.status(401).json({ message: "Invalid token" });
+        }
+        const userDecoded = {
+            email: decoded.email,
+            id: decoded.userId,
+            fullname: decoded.userName,
+            credits: decoded.userCredits,
+            avatarlink: decoded.userAvatar,
+        }
+        return res.status(200).json({ message: "Token is valid", user: userDecoded });
     } catch (error) {
         console.error("Error validating token:", error);
         return res.status(500).json({ message: "Internal server error" });

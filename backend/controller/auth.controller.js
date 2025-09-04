@@ -64,7 +64,7 @@ export const login = async (req, res) => {
             return res.status(401).json({ message: "Invalid OTP" });
         }
 
-        const user = await db.select().from(users).where(eq(users.email, email_)).execute();
+        let user = await db.select().from(users).where(eq(users.email, email_)).execute();
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }

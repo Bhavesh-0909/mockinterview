@@ -50,12 +50,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             headers: { 
               Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json'
-            }
+            },
+            method: 'POST',
           });
           
           if (response.ok) {
             const userData = await response.json();
-            setUser(userData.user || userData); // Handle different response formats
+            setUser(userData.user);
           } else {
             // Token is invalid, remove it
             localStorage.removeItem('authToken');

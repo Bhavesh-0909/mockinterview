@@ -89,7 +89,7 @@ export default function InputOTPForm() {
       }
 
       const result = await response.json();
-      
+      console.log("OTP verification result:", result);
       if (result.token && result.user) {
         
         const success = await login(result.user, result.token);

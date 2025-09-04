@@ -46,8 +46,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const token = localStorage.getItem('authToken');
         if (token) {
           // Validate token with your backend
-          const response = await fetch(`http://localhost:3000/api/v1/auth/validate-token`, {
-            headers: { 
+          const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/auth/validate-token`, {
+            headers: {
               Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json'
             },

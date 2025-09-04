@@ -68,7 +68,7 @@ export const login = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-
+        user = user[0];
         const token = jwt.sign({ 
             email: user.email,
             userId: user.id,
@@ -129,18 +129,19 @@ export const signup = async (req, res) => {
     }
 };
 
-export const validateToken = (req, res) => {
+export const validateToken = async (req, res) => {
     try {
         const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
         if (!token) {
             return res.status(401).json({ message: "No token provided" });
         }
-        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        await jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
-                return res.status(401).json({ message: "Invalid token" });
+                return null;
             }
-            return res.status(200).json({ message: "Token is valid", decoded });
+            return res.status(200).json({ message: "Token is valid", user: decoded });
         });
+        
     } catch (error) {
         console.error("Error validating token:", error);
         return res.status(500).json({ message: "Internal server error" });

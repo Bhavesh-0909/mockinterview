@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Bot, Menu, X, Sun, Moon, User, LogOut, Settings, LayoutDashboard } from "lucide-react";
+import { Bot, Menu, X, Sun, Moon, LogOut, LayoutDashboard } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { useAuth } from "@/context/AuthContext";
 import {
@@ -61,12 +61,6 @@ const Nav = () => {
     { to: "/contact", label: "Contact" },
   ];
 
-  // Authenticated navigation items
-
-  const isActivePath = (path: string) => {
-    return location.pathname === path;
-  };
-
   if (isLoading) {
     return (
       <nav className="h-16 w-full flex items-center justify-between px-4 bg-background border-b">
@@ -94,7 +88,7 @@ const Nav = () => {
 
       <div className="hidden md:flex items-center space-x-6">
         {publicNavItems.map((item) => (
-          <Button variant="link" className="text-md font-semibold" asChild key={item.to}>
+          <Button variant="link" onClick={closeMenu} className="text-md font-semibold" asChild key={item.to}>
             <Link to={item.to}>{item.label}</Link>
           </Button>
         ))}
@@ -180,7 +174,7 @@ const Nav = () => {
           <div className="flex flex-col justify-center items-center p-4 space-y-4">
             <div className="flex flex-col justify-center items-center space-y-2">
               {publicNavItems.map((item) => (
-                <Button variant="link" className="text-md font-semibold" asChild key={item.to}>
+                <Button variant="link" onClick={closeMenu} className="text-md font-semibold" asChild key={item.to}>
                   <Link to={item.to}>{item.label}</Link>
                 </Button>
               ))}

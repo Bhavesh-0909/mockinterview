@@ -9,7 +9,7 @@ import NotFound from "@/pages/NotFound";
 import LoginPage from "@/pages/login";
 import SignupPage from "@/pages/signup";
 import VerifyOTP from "@/pages/verifyOTP";
-import Dashboard from "@/pages/Dashboard";
+import Profile from "@/pages/Profile";
 import { Toaster } from "sonner";
 import LoadingBar from "react-top-loading-bar";
 import { useRef } from "react";
@@ -62,7 +62,7 @@ function AppLayout() {
                 path="/dashboard"
                 element={
                   <ProtectedRoute>
-                    <Dashboard />
+                    <Profile />
                   </ProtectedRoute>
                 }
               />
@@ -70,7 +70,7 @@ function AppLayout() {
                 path="/history"
                 element={
                   <ProtectedRoute>
-                    <Dashboard />
+                    <Profile />
                   </ProtectedRoute>
                 }
               />
@@ -113,7 +113,7 @@ function AppLayout() {
                 path="/dashboard"
                 element={
                   <ProtectedRoute>
-                    <Dashboard />
+                    <Profile />
                   </ProtectedRoute>
                 }
               />

@@ -9,7 +9,7 @@ function Profile() {
   return (
     <div className="h-full w-full flex flex-col items-start pr-5 md:pr-10">
       <h1 className="scroll-m-20 py-1.5 text-md tracking-tight text-balance">Profile</h1>
-      <div className="flex flex-col flex-wrap w-full space-y-4 py-4">
+      <div className="flex flex-col flex-wrap -ml-6 w-full space-y-4 py-4">
         {/* avatar section */}
         <div className="w-full h-fit flex flex-col flex-wrap border border-border rounded-md">
           <div className="flex w-full justify-between items-center border-b border-border p-6">

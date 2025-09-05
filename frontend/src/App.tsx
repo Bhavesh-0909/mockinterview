@@ -20,7 +20,7 @@ import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
 function AppLayout() {
   const loadingBarRef = useRef<LoadingBarRef>(null);
   const location = useLocation();
-  const sidebarRoutes = ["/dashboard", "/history"];
+  const sidebarRoutes = ["/profile", "/history"];
 
   return (
     <div className="min-h-screen max-w-screen overflow-x-hidden bg-background">
@@ -29,7 +29,7 @@ function AppLayout() {
       {sidebarRoutes.includes(location.pathname) ? (
         <SidebarProvider>
           <AppSidebar />
-          <SidebarTrigger />
+          <SidebarTrigger className="m-1.5"/>
           <main className="flex-1">
             <Routes>
               <Route path="/" element={<Home />} />
@@ -59,7 +59,7 @@ function AppLayout() {
                 }
               />
               <Route
-                path="/dashboard"
+                path="/profile"
                 element={
                   <ProtectedRoute>
                     <Profile />
@@ -110,7 +110,7 @@ function AppLayout() {
                 }
               />
               <Route
-                path="/dashboard"
+                path="/profile"
                 element={
                   <ProtectedRoute>
                     <Profile />

@@ -50,7 +50,7 @@ export default function InputOTPForm() {
   // Redirect if already authenticated
   useEffect(() => {
     if (user) {
-      const from = location.state?.from?.pathname || "/dashboard";
+      const from = location.state?.from?.pathname || "/profile";
       navigate(from, { replace: true });
     }
   }, [user, navigate, location.state]);
@@ -99,7 +99,7 @@ export default function InputOTPForm() {
         }
         toast.success("OTP verified successfully");
         
-        const from = location.state?.from?.pathname || "/dashboard";
+        const from = location.state?.from?.pathname || "/profile";
         navigate(from, { replace: true });
       } else {
         toast.error("Invalid response from server");

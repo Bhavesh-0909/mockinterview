@@ -18,9 +18,9 @@ export const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
     );
   }
 
-  // If user is already logged in, redirect to dashboard
+  // If user is already logged in, redirect to profile
   if (user) {
-    const from = location.state?.from?.pathname || '/dashboard';
+    const from = location.state?.from?.pathname || '/profile';
     return <Navigate to={from} replace />;
   }
 

@@ -130,7 +130,7 @@ const Nav = () => {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <Link to="/dashboard" className="flex items-center">
+                <Link to="/profile" className="flex items-center">
                   <LayoutDashboard className="mr-2 h-4 w-4" />
                   Dashboard
                 </Link>
@@ -205,7 +205,7 @@ const Nav = () => {
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/dashboard" className="flex items-center">
+                    <Link to="/profile" className="flex items-center">
                       <LayoutDashboard className="mr-2 h-4 w-4" />
                       Dashboard
                     </Link>

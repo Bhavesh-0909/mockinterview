@@ -20,12 +20,13 @@ import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
 function AppLayout() {
   const loadingBarRef = useRef<LoadingBarRef>(null);
   const location = useLocation();
+  const sidebarRoutes = ["/dashboard", "/history"];
 
   return (
     <div className="min-h-screen max-w-screen overflow-x-hidden bg-background">
       <LoadingBar color="#3b82f6" ref={loadingBarRef} />
 
-      {location.pathname === "/dashboard" ? (
+      {sidebarRoutes.includes(location.pathname) ? (
         <SidebarProvider>
           <AppSidebar />
           <SidebarTrigger />
@@ -59,6 +60,14 @@ function AppLayout() {
               />
               <Route
                 path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/history"
                 element={
                   <ProtectedRoute>
                     <Dashboard />
@@ -108,6 +117,7 @@ function AppLayout() {
                   </ProtectedRoute>
                 }
               />
+              
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

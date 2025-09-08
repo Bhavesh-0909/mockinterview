@@ -1,7 +1,6 @@
 import { useAuth } from "@/context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
-import '@react-pdf-viewer/core/lib/styles/index.css';
 
 function Profile() {
   const { user } = useAuth();

@@ -10,8 +10,12 @@ server.use(bodyParser.json());
 server.use(cookieParser());
 
 server.use(cors({
-    origin: '*',
-    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
+    origin: [
+        "https://ai-mockinterview-zeta.vercel.app",
+        "http://localhost:5173"
+    ],
+    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+    credentials: true
 }));
 
 //routes

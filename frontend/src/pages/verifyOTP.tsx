@@ -75,6 +75,7 @@ export default function InputOTPForm() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ 
           email_: email, 
           otp_: data.pin 
@@ -89,7 +90,6 @@ export default function InputOTPForm() {
       }
 
       const result = await response.json();
-      console.log("OTP verification result:", result);
       if (result.token && result.user) {
         
         const success = await login(result.user, result.token);
@@ -105,7 +105,6 @@ export default function InputOTPForm() {
         toast.error("Invalid response from server");
       }
     } catch (error) {
-      console.error("OTP verification error:", error);
       toast.error(`Failed to verify OTP: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setIsSubmitting(false);

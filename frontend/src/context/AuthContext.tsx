@@ -20,6 +20,21 @@ interface AuthContextType {
   clearError: () => void;
 }
 
+const getCookie = (name: string): string | null => {
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+};
+
+const deleteCookie = (name: string) => {
+  document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;secure;samesite=strict`;
+};
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
@@ -43,15 +58,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const token = localStorage.getItem('authToken');
-        if (token) {
+        // Check if auth cookie exists
+        const authToken = getCookie('token');
+        
+        if (authToken) {
           // Validate token with your backend
-          const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/auth/validate-token`, {
+          const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/v1/auth/validate-token`, {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${authToken}`,
               'Content-Type': 'application/json'
             },
             method: 'POST',
+            credentials: 'include', // Important for cookie-based auth
           });
           
           if (response.ok) {
@@ -59,8 +77,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             console.log('User data from token validation:', userData);
             setUser(userData.user);
           } else {
-            // Token is invalid, remove it
-            localStorage.removeItem('authToken');
+            deleteCookie('token');
             if (response.status === 401) {
               console.log('Token expired or invalid');
             }
@@ -69,7 +86,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       } catch (error) {
         console.error('Auth check failed:', error);
         // Remove potentially corrupted token
-        localStorage.removeItem('authToken');
+        deleteCookie('token');
       } finally {
         setIsLoading(false);
       }
@@ -77,7 +94,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     checkAuthStatus();
   }, []);
-
 
   // Direct login with user data and token (for OTP flow)
   const login = async (userData: User, token: string): Promise<boolean> => {
@@ -87,8 +103,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setError('Invalid user data or token');
         return false;
       }
-
-      localStorage.setItem('authToken', token);
       setUser(userData);
       setError(null);
       return true;
@@ -99,34 +113,32 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-
   // Logout function
   const logout = async () => {
     setIsLoading(true);
     
     try {
-      const token = localStorage.getItem('authToken');
+      const authToken = getCookie('token');
       
-      // Optional: Call logout endpoint to invalidate token on server
-      if (token) {
+      if (authToken) {
         try {
-          await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/auth/logout`, {
+          await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/v1/auth/logout`, {
             method: 'POST',
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${authToken}`,
               'Content-Type': 'application/json'
-            }
+            },
+            credentials: 'include',
           });
         } catch (error) {
-          // Non-critical error - continue with local logout
           console.warn('Server logout failed:', error);
         }
       }
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
-      // Always clear local storage and user state
-      localStorage.removeItem('authToken');
+      // Always clear cookie and user state
+      deleteCookie('token');
       setUser(null);
       setError(null);
       setIsLoading(false);

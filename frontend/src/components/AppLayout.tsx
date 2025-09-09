@@ -128,9 +128,9 @@ function AppLayout() {
         toastOptions={{
           duration: 4000,
           style: {
-            background: "bg-background",
-            color: "primary",
-            border: "border-border",
+            background: "#09090b",
+            color: "#7f22fe",
+            border: "#7f22fe 1px solid",
           },
         }}
       />

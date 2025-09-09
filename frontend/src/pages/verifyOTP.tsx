@@ -92,7 +92,7 @@ export default function InputOTPForm() {
       const result = await response.json();
       if (result.token && result.user) {
         
-        const success = await login(result.user, result.token);
+        const success = await login(result.user);
         if (!success) {
           toast.error("Login failed after OTP verification");
           return;

@@ -13,7 +13,7 @@ interface User {
 
 interface AuthContextType {
   user: User | null;
-  login: (userData: User, token: string) => Promise<boolean>;
+  login: (userData: User) => Promise<boolean>;
   logout: () => void;
   isLoading: boolean;
   error: string | null;
@@ -96,11 +96,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   // Direct login with user data and token (for OTP flow)
-  const login = async (userData: User, token: string): Promise<boolean> => {
+  const login = async (userData: User): Promise<boolean> => {
     try {
       // Validate the provided data
-      if (!userData || !token) {
-        setError('Invalid user data or token');
+      if (!userData) {
+        setError('Invalid user data');
         return false;
       }
       setUser(userData);

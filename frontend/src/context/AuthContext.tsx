@@ -69,7 +69,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               'Content-Type': 'application/json'
             },
             method: 'POST',
-            credentials: 'include', // Important for cookie-based auth
+            credentials: 'include',
           });
           
           if (response.ok) {
